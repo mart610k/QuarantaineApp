@@ -16,9 +16,10 @@ public class FormatHelper {
     }
 
     public static boolean ValidateRepeatedPassword(String password, String passwordToValidate) {
-        if(ValidatePassword(passwordToValidate)) {
+        if (ValidatePassword(passwordToValidate)) {
             return passwordToValidate.equals(password);
+        } else {
+            return false;
         }
-        else  {return false;}
     }
 }

@@ -81,6 +81,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        // Name
+        EditText name = findViewById(R.id.name);
+
         // Phone Number & Listener
         EditText phone = findViewById(R.id.phoneNumber);
         phone.addTextChangedListener(new TextWatcher() {
@@ -117,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public void Toast(String text) {
+    private void Toast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }

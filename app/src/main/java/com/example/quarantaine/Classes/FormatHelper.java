@@ -8,10 +8,17 @@ public class FormatHelper {
     }
 
     public static boolean ValidateUsername(String usernameToValidate) {
-        return usernameToValidate.matches("^[^_<>%$.,/:;*-+<> ][0-z][^_<>%$.:;,/*-+<> ]{5,128}$");
+        return usernameToValidate.matches("^[^_<>%$.,/:;*-+ ][0-z][^_<>%$.:;,/*-+ ]{5,128}$");
     }
 
     public static boolean ValidatePassword(String passwordToValidate) {
-        return passwordToValidate.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[@$!%#^*?&])[A-Za-z\\\\d@$!#%^*?&]{8,}$");
+        return passwordToValidate.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%#^*?=&])[A-Za-z\\d@$!#%^*?&=]{8,}$");
+    }
+
+    public static boolean ValidateRepeatedPassword(String password, String passwordToValidate) {
+        if(ValidatePassword(passwordToValidate)) {
+            return passwordToValidate.equals(password);
+        }
+        else  {return false;}
     }
 }

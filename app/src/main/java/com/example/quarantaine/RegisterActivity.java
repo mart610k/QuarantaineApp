@@ -18,7 +18,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         // input validation
-        FormatHelper formatHelper = new FormatHelper();
+
 
         // Username & Listener
         EditText username = findViewById(R.id.username);
@@ -30,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                boolean state = formatHelper.ValidateUsername(username.getText().toString());
+                boolean state = FormatHelper.ValidateUsername(username.getText().toString());
                 ChangeColour(state,username);
             }
 
@@ -50,8 +50,29 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                boolean state = formatHelper.ValidatePassword(password.toString());
+                Toast(password.getText().toString());
+                boolean state = FormatHelper.ValidatePassword(password.getText().toString());
                 ChangeColour(state,password);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        // PasswordRepeat & Listener
+        EditText passwordRepeat = findViewById(R.id.repeatPass);
+        passwordRepeat.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                boolean state = FormatHelper.ValidateRepeatedPassword(password.getText().toString(),passwordRepeat.getText().toString());
+                ChangeColour(state, passwordRepeat);
             }
 
             @Override
@@ -70,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                boolean state = formatHelper.ValidatePhoneNumber(phone.getText().toString());
+                boolean state = FormatHelper.ValidatePhoneNumber(phone.getText().toString());
                 ChangeColour(state,phone);
             }
 
@@ -86,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void ChangeColour(boolean value, EditText input){
 
-        if(value != true){
+        if(!value){
             input.setBackgroundColor(Color.parseColor("#f80202"));
         } else {
             input.setBackgroundColor(Color.parseColor("#00ff80"));

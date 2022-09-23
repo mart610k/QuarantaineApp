@@ -2,23 +2,25 @@ package com.example.quarantaine;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.quarantaine.Classes.*;
+import dk.quarantaine.commons.helpers.FormatHelper;
 
 public class RegisterActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        // input validation
-
 
         // Username & Listener
         EditText username = findViewById(R.id.username);
@@ -30,8 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                boolean state = FormatHelper.ValidateUsername(username.getText().toString());
-                ChangeColour(state,username);
+                boolean state = FormatHelper.validateUsername(username.getText().toString());
+                ChangeColour(state,username, "username");
             }
 
             @Override
@@ -50,9 +52,8 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Toast(password.getText().toString());
-                boolean state = FormatHelper.ValidatePassword(password.getText().toString());
-                ChangeColour(state,password);
+                boolean state = FormatHelper.validatePassword(password.getText().toString());
+                ChangeColour(state,password,"password");
             }
 
             @Override
@@ -71,8 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                boolean state = FormatHelper.ValidateRepeatedPassword(password.getText().toString(),passwordRepeat.getText().toString());
-                ChangeColour(state, passwordRepeat);
+                boolean state = FormatHelper.validateRepeatedPassword(password.getText().toString(),passwordRepeat.getText().toString());
+                ChangeColour(state, passwordRepeat, "reppass");
             }
 
             @Override
@@ -94,8 +95,8 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                boolean state = FormatHelper.ValidatePhoneNumber(phone.getText().toString());
-                ChangeColour(state,phone);
+                boolean state = FormatHelper.validatePhoneNumber(phone.getText().toString());
+                ChangeColour(state,phone,"phone");
             }
 
             @Override
@@ -104,14 +105,42 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        Button registerButton = (Button) findViewById(R.id.registrer);
 
+        registerButton.setOnClickListener(v -> Register(
+                username.getText().toString(),
+                password.getText().toString(),
+                name.getText().toString(),
+                phone.getText().toString()
+        ));
     }
 
 
-    private void ChangeColour(boolean value, EditText input){
+
+
+    public void Register(String username, String pass, String name, String phone){
+        if(!name.equals("") || !username.equals("") || !pass.equals("") || !phone.equals("")) {
+            boolean reply = LogicController.RegisterUser(username, pass, name, phone);
+            if(reply){
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+            else {
+                Toast("Registrering fejlet");
+            }
+        }
+        else {
+            Toast("Udfyld venligst tomme felter");
+        }
+    }
+
+    private void ChangeColour(boolean value, EditText input, String type){
 
         if(!value){
-            input.setBackgroundColor(Color.parseColor("#f80202"));
+            if (type.equals("password")) {
+                input.setError("1 stort bogstav"+ "\r\n"+ "1 lille bogstav"+ "\r\n"+ "1 tegn"+ "\r\n" +"1 tal");
+            }
+            input.setBackgroundColor(Color.parseColor("#ffa0a0"));
         } else {
             input.setBackgroundColor(Color.parseColor("#00ff80"));
         }

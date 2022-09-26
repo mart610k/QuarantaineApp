@@ -2,6 +2,8 @@ package com.example.quarantaine;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -117,11 +119,19 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-
+    // Start på registering af bruger, med nødvendige input
     public void Register(String username, String pass, String name, String phone){
         if(!name.equals("") || !username.equals("") || !pass.equals("") || !phone.equals("")) {
+            // Sender data videre til næste lag
             boolean reply = LogicController.RegisterUser(username, pass, name, phone);
             if(reply){
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Sender til Forside");
+                builder.setTitle("Redirect");
+                AlertDialog alert = builder.create();
+
+
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -134,6 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    // Skifter farve på tekstfelt baseret på om input er korrekt eller ukorrekt
     private void ChangeColour(boolean value, EditText input, String type){
 
         if(!value){
@@ -149,6 +160,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    // Printer en toast baseret på String input
     private void Toast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }

@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    // Changes to the Register Page
     public void RegisterPageChange(View view){
         Intent changePage = new Intent(MainActivity.this,RegisterActivity.class);
         startActivity(changePage);

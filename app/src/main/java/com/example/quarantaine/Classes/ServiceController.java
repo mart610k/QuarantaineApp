@@ -1,10 +1,11 @@
 package com.example.quarantaine.Classes;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.widget.Toast;
 
-import com.example.quarantaine.Classes.DTO.RegisterUserDTO;
+import com.example.quarantaine.DTO.RegisterUserDTO;
 import com.example.quarantaine.Interfaces.IRegisterUserRequestHandler;
+import com.example.quarantaine.RegisterActivity;
 
 
 import retrofit2.Call;
@@ -13,31 +14,32 @@ import retrofit2.Response;
 
 public class ServiceController {
 
-    private static boolean created = false;
+    private static boolean created = false; // Bool der fortæller om brugeren er registreret eller ej
+
+    // Sender Post data til API, via vores RequestHandler's Call metode. og sætter Created bool til true hvis API svare tilbage positivt
     public static boolean RegisterUser(RegisterUserDTO newUser) {
+        //RegisterActivity activity = new RegisterActivity();
 
         IRegisterUserRequestHandler requestHandler = ApiClient.GetClient().create(IRegisterUserRequestHandler.class);
         Call<String> call = requestHandler.PostData(newUser);
 
-        call.enqueue(new Callback<String>() {
+         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
-                    String result = response.body();
-                    created = true;
+                    if(response.body() != null){
+                        created = true;
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                // Response with Failure exception
-
+                t.printStackTrace();
+           //     Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
         return created;
-
     }
-
-
 }

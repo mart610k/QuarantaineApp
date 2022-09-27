@@ -6,7 +6,11 @@ import android.widget.Toast;
 import com.example.quarantaine.DTO.RegisterUserDTO;
 import com.example.quarantaine.Interfaces.IRegisterUserRequestHandler;
 import com.example.quarantaine.RegisterActivity;
+import com.google.gson.JsonObject;
 
+
+import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,20 +25,19 @@ public class ServiceController {
         //RegisterActivity activity = new RegisterActivity();
 
         IRegisterUserRequestHandler requestHandler = ApiClient.GetClient().create(IRegisterUserRequestHandler.class);
-        Call<String> call = requestHandler.PostData(newUser);
+        Call<JsonObject> call = requestHandler.PostData(newUser);
 
-         call.enqueue(new Callback<String>() {
+         call.enqueue(new Callback<JsonObject>() {
+
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if(response.isSuccessful()){
-                    if(response.body() != null){
-                        created = true;
-                    }
+                    created = true;
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 t.printStackTrace();
            //     Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
             }

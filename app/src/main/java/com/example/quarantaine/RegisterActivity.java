@@ -123,7 +123,13 @@ public class RegisterActivity extends AppCompatActivity {
     public void Register(String username, String pass, String name, String phone){
         if(!name.equals("") || !username.equals("") || !pass.equals("") || !phone.equals("")) {
             // Sender data videre til næste lag
+
             boolean reply = LogicController.RegisterUser(username, pass, name, phone);
+            try {
+                Thread.sleep(500);
+            } catch (Exception e){
+
+            }
             if(reply){
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -131,6 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
                 builder.setTitle("Redirect");
                 AlertDialog alert = builder.create();
 
+                alert.show();
 
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                 startActivity(intent);

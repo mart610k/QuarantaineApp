@@ -125,11 +125,6 @@ public class RegisterActivity extends AppCompatActivity {
             // Sender data videre til næste lag
 
             boolean reply = LogicController.RegisterUser(username, pass, name, phone);
-            try {
-                Thread.sleep(500);
-            } catch (Exception e){
-
-            }
             if(reply){
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);

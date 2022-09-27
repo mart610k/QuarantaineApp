@@ -1,24 +1,18 @@
 package com.example.quarantaine.Classes;
 
 import com.example.quarantaine.DTO.RegisterUserDTO;
+import com.google.gson.JsonObject;
 
 public class LogicController {
 
-    static private boolean reply = false;
+    static private Boolean reply = null;
 
     // Laver Registrer bruger objektet og sender videre til Service
-    public static boolean RegisterUser(String username, String password, String name, String phoneNumber) {
-        RegisterUserDTO registerUserDTO = null;
-        try {
-            registerUserDTO = new RegisterUserDTO(username, password, name, phoneNumber);
+    public static Boolean RegisterUser(String username, String password, String name, String phoneNumber) {
 
-        }
-        catch (Exception e) {
-
-        }
+        RegisterUserDTO registerUserDTO = new RegisterUserDTO(username, password, name, phoneNumber);
 
         reply = ServiceController.RegisterUser(registerUserDTO);
-
         return reply;
     }
 

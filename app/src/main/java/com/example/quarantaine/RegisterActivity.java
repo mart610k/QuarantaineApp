@@ -3,12 +3,12 @@ package com.example.quarantaine;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -124,12 +124,8 @@ public class RegisterActivity extends AppCompatActivity {
         if(!name.equals("") || !username.equals("") || !pass.equals("") || !phone.equals("")) {
             // Sender data videre til næste lag
 
-            boolean reply = LogicController.RegisterUser(username, pass, name, phone);
-            try {
-                Thread.sleep(500);
-            } catch (Exception e){
+            boolean reply = UserLogic.RegisterUser(username, pass, name, phone);
 
-            }
             if(reply){
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);

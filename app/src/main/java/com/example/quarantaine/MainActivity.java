@@ -2,11 +2,9 @@ package com.example.quarantaine;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,5 +21,9 @@ public class MainActivity extends AppCompatActivity {
     public void RegisterPageChange(View view){
         Intent changePage = new Intent(MainActivity.this,RegisterActivity.class);
         startActivity(changePage);
+    }
+
+    private void Toast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }

@@ -46,6 +46,9 @@ public class JSONApiCaller implements Callable<APIResponse> {
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("content-type", "application/json");
 
+                //extra data
+                //connection.setRequestProperty(map.key, map.data);
+
                 ObjectMapper mapper = new ObjectMapper();
 
                 connection.setDoOutput(true);

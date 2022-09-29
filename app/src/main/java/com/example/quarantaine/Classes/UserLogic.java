@@ -3,6 +3,7 @@ package com.example.quarantaine.Classes;
 import android.util.Log;
 
 import com.example.quarantaine.DTO.APIResponse;
+import com.example.quarantaine.MainActivity;
 import com.example.quarantaine.service.JSONApiCaller;
 
 import java.util.concurrent.FutureTask;
@@ -27,6 +28,8 @@ public class UserLogic {
 
             Log.i("app", registerUserDTO.toJson().toString());
 
+            //This needs to moved out, But how...
+
             FutureTask<APIResponse> task = new FutureTask<APIResponse>(new JSONApiCaller("/api/register",registerUserDTO));
 
             APIResponse result = null;
@@ -36,6 +39,8 @@ public class UserLogic {
             result = task.get(5,TimeUnit.SECONDS);
 
             Log.i("app","Got Response");
+
+            //This needs to be moved out.
 
 
             if(result.getResponseCode() == 200){

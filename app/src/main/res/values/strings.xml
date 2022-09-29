@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Quarantaine</string>
+    <string name="logo">Logo</string>
+    <string name="register">Registrer</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="name">Navn</string>
+    <string name="phone">Telefon Nummer</string>
+    <string name="repeat_password">Gentag Password</string>
 </resources>

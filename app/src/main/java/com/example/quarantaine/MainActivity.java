@@ -2,39 +2,62 @@ package com.example.quarantaine;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-import static android.Manifest.permission.ACCESS_BACKGROUND_LOCATION;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
+    LocationManager manager;
+
+    private static final int HANDLER_DELAY = 1000;
+    private ArrayList<String> permissionToRequest;
+    private ArrayList<String> rejectedPermissions = new ArrayList();
+    private ArrayList<String> permissions = new ArrayList();
+
+    FusedLocationProviderClient locationProviderClient;
+
+    private final static int ALL_PERMISSIONS_RESULT = 101;
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         GetPermissions();
+
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                Toast.makeText(MainActivity.this, "Latitude: " + location.getLatitude() + ", Longitude: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
+            }
+        };
+        Button btn = findViewById(R.id.login);
+
+        manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,5000L,0F, locationListener);
+
     }
-
-    private ArrayList<String> permissionToRequest;
-    private ArrayList<String> rejectedPermissions = new ArrayList();
-    private ArrayList<String> permissions = new ArrayList();
-
-    private final static int ALL_PERMISSIONS_RESULT = 101;
 
     public void GetPermissions() {
         permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
-        permissions.add(ACCESS_BACKGROUND_LOCATION);
-
 
 
         permissionToRequest = findUnaskedPermission(permissions);
@@ -87,9 +110,10 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
                 }
-            break;
+                break;
         }
     }
+
 
 
     private void ShowMessageOKCancel(String message, DialogInterface.OnClickListener onClickListener) {
@@ -107,4 +131,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(changePage);
 
     }
+
+
 }

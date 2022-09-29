@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.quarantaine"
-        minSdk 28
+        minSdk 30
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -46,6 +46,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation files('libs\\lib-quarantaine-commons-1.jar')
     implementation files('libs\\lib-quarantaine-commons-1.jar')
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'

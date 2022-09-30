@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onLocationChanged(@NonNull Location location) {
 
+                // Try and see if you can create the location model, Error toast in case it doesn't work
                 try {
                     locationModel = new LocationModel(-1,location.getLatitude(),location.getLongitude(), Calendar.getInstance().getTime());
                 }
@@ -61,9 +62,10 @@ public class MainActivity extends AppCompatActivity  {
                     locationModel = new LocationModel(-1,0,0, Calendar.getInstance().getTime());
                 }
 
-
+                // Calls the addLocation function of our datahelper & returns a bool
                 Boolean locationAdded = databaseHelper.addLocation(locationModel);
 
+                // toasting whether it was successful or not
                 Toast.makeText(MainActivity.this, "Location added successful: " + locationAdded, Toast.LENGTH_SHORT).show();
 
                 databaseHelper.close();
@@ -85,15 +87,16 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 
+        // Uses the location manager to get GPS lokation every 2 minutes
         manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,LOCATION_GET_DATA_DELAY,0F, locationListener);
 
     }
 
+    // Gets the needed permissions of the app
     public void GetPermissions() {
         permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
-
 
         permissionToRequest = findUnaskedPermission(permissions);
 
@@ -103,6 +106,7 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
+    // Finds out which of these permissions are unasked
     private ArrayList findUnaskedPermission(ArrayList<String> permissions) {
         ArrayList result = new ArrayList();
 
@@ -116,23 +120,26 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    // Checks if the permission is granted and returns true or false
     private Boolean HasPermission(String permission){
         return (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);
     }
 
+    // callback on the permission results
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         switch (requestCode) {
-
             case ALL_PERMISSIONS_RESULT:
+                // If the permission was denied, add to rejected permission list
                 for (String permission : permissionToRequest){
                     if(!HasPermission(permission)) {
                         rejectedPermissions.add(permission);
                     }
                 }
 
+                // If the permission to request is not empty, And asks for permission again if rejected permissions isn't empty
                 if(permissionToRequest.size() > 0) {
                     if(shouldShowRequestPermissionRationale(rejectedPermissions.get(0))){
                         ShowMessageOKCancel("Disse rettighedder er obligatoriske, venligst godkend",
@@ -150,7 +157,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
-
+    // Shows a message in an alert dialog
     private void ShowMessageOKCancel(String message, DialogInterface.OnClickListener onClickListener) {
         new AlertDialog.Builder(this)
                 .setMessage(message)

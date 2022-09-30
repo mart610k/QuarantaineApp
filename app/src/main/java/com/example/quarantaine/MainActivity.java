@@ -20,9 +20,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.quarantaine.Classes.DatabaseHelper;
+import com.example.quarantaine.Classes.LocationModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity  {
     LocationManager manager;
@@ -31,10 +35,13 @@ public class MainActivity extends AppCompatActivity  {
     private ArrayList<String> permissionToRequest;
     private ArrayList<String> rejectedPermissions = new ArrayList();
     private ArrayList<String> permissions = new ArrayList();
+    private LocationModel locationModel;
 
-    FusedLocationProviderClient locationProviderClient;
+
 
     private final static int ALL_PERMISSIONS_RESULT = 101;
+    private final static long LOCATION_GET_DATA_DELAY = 1000L*60L*2L;
+    private final DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +52,41 @@ public class MainActivity extends AppCompatActivity  {
         LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
-                Toast.makeText(MainActivity.this, "Latitude: " + location.getLatitude() + ", Longitude: " + location.getLongitude(), Toast.LENGTH_SHORT).show();
+
+                try {
+                    locationModel = new LocationModel(-1,location.getLatitude(),location.getLongitude(), Calendar.getInstance().getTime());
+                }
+                catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Error Inserting Location Data", Toast.LENGTH_SHORT).show();
+                    locationModel = new LocationModel(-1,0,0, Calendar.getInstance().getTime());
+                }
+
+
+                Boolean locationAdded = databaseHelper.addLocation(locationModel);
+
+                Toast.makeText(MainActivity.this, "Location added successful: " + locationAdded, Toast.LENGTH_SHORT).show();
+
+                databaseHelper.close();
             }
         };
+
+
         Button btn = findViewById(R.id.login);
 
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean delete = databaseHelper.deleteLocation();
+                if(delete) {
+                    Toast.makeText(MainActivity.this, "Deleted Data Successfully", Toast.LENGTH_SHORT).show();
+                }
+                databaseHelper.close();
+
+            }
+        });
+
         manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,5000L,0F, locationListener);
+        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,LOCATION_GET_DATA_DELAY,0F, locationListener);
 
     }
 

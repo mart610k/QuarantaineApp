@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,10 +16,6 @@ import com.example.quarantaine.Classes.*;
 import dk.quarantaine.commons.helpers.FormatHelper;
 
 public class RegisterActivity extends AppCompatActivity {
-
-
-
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 boolean state = FormatHelper.validateUsername(username.getText().toString());
-                ChangeColour(state,username, "username");
+                changeColour(state,username, "username");
             }
 
             @Override
@@ -59,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 boolean state = FormatHelper.validatePassword(password.getText().toString());
-                ChangeColour(state,password,"password");
+                changeColour(state,password,"password");
             }
 
             @Override
@@ -79,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 boolean state = FormatHelper.validateRepeatedPassword(password.getText().toString(),passwordRepeat.getText().toString());
-                ChangeColour(state, passwordRepeat, "reppass");
+                changeColour(state, passwordRepeat, "reppass");
             }
 
             @Override
@@ -102,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 boolean state = FormatHelper.validatePhoneNumber(phone.getText().toString());
-                ChangeColour(state,phone,"phone");
+                changeColour(state,phone,"phone");
             }
 
             @Override
@@ -113,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Button registerButton = (Button) findViewById(R.id.registrer);
 
-        registerButton.setOnClickListener(v -> Register(
+        registerButton.setOnClickListener(v -> register(
                 username.getText().toString(),
                 password.getText().toString(),
                 name.getText().toString(),
@@ -124,11 +119,11 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     // Start på registering af bruger, med nødvendige input
-    public void Register(String username, String pass, String name, String phone){
+    public void register(String username, String pass, String name, String phone){
         if(!name.equals("") || !username.equals("") || !pass.equals("") || !phone.equals("")) {
             // Sender data videre til næste lag
 
-            boolean reply = UserLogic.RegisterUser(username, pass, name, phone);
+            boolean reply = UserLogic.registerUser(username, pass, name, phone);
 
             if(reply){
 
@@ -152,7 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     // Skifter farve på tekstfelt baseret på om input er korrekt eller ukorrekt
-    private void ChangeColour(boolean value, EditText input, String type){
+    private void changeColour(boolean value, EditText input, String type){
 
         if(!value){
             if (type.equals("password")) {

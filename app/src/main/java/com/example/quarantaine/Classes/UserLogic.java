@@ -3,7 +3,6 @@ package com.example.quarantaine.Classes;
 import android.util.Log;
 
 import com.example.quarantaine.DTO.APIResponse;
-import com.example.quarantaine.MainActivity;
 import com.example.quarantaine.service.JSONApiCaller;
 
 import java.util.concurrent.FutureTask;
@@ -15,7 +14,7 @@ public class UserLogic {
 
 
     // Laver Registrer bruger objektet og sender videre til Service
-    public static boolean RegisterUser(String username, String password, String name, String phoneNumber) {
+    public static boolean registerUser(String username, String password, String name, String phoneNumber) {
         boolean reply = false;
 
         try {

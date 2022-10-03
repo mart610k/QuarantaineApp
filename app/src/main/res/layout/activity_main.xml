@@ -87,7 +87,7 @@
                 android:textColor="@color/black"
                 android:background="@drawable/button_border"
                 android:textSize="18sp"
-                android:onClick="RegisterPageChange"/>
+                android:onClick="registerPageChange"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

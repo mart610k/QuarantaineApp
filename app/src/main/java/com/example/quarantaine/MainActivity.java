@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        GetPermissions();
+        getPermissions();
 
         Button btn = findViewById(R.id.login);
 
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     // Gets the needed permissions of the app
-    public void GetPermissions() {
+    public void getPermissions() {
         permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
 
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity  {
         ArrayList result = new ArrayList();
 
         for (String permission : permissions) {
-            if(!HasPermission(permission)){
+            if(!hasPermission(permission)){
                 result.add(permission);
             }
         }
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     // Checks if the permission is granted and returns true or false
-    private Boolean HasPermission(String permission){
+    private Boolean hasPermission(String permission){
         return (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);
     }
 
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity  {
             case ALL_PERMISSIONS_RESULT:
                 // If the permission was denied, add to rejected permission list
                 for (String permission : permissionToRequest){
-                    if(!HasPermission(permission)) {
+                    if(!hasPermission(permission)) {
                         rejectedPermissions.add(permission);
                     }
                 }
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity  {
                 // If the permission to request is not empty, And asks for permission again if rejected permissions isn't empty
                 if(permissionToRequest.size() > 0) {
                     if(shouldShowRequestPermissionRationale(rejectedPermissions.get(0))){
-                        ShowMessageOKCancel("Disse rettighedder er obligatoriske, venligst godkend",
+                        showMessageOKCancel("Disse rettighedder er obligatoriske, venligst godkend",
                                 new DialogInterface.OnClickListener(){
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     // Shows a message in an alert dialog
-    private void ShowMessageOKCancel(String message, DialogInterface.OnClickListener onClickListener) {
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener onClickListener) {
         new AlertDialog.Builder(this)
                 .setMessage(message)
                 .setPositiveButton("OK", onClickListener)
@@ -127,11 +127,10 @@ public class MainActivity extends AppCompatActivity  {
                 .show();
     }
 
-    // Changes to the Register Page
-    public void RegisterPageChange(View view){
+    // Changes to the register Page
+    public void registerPageChange(View view){
         Intent changePage = new Intent(MainActivity.this,RegisterActivity.class);
         startActivity(changePage);
-
     }
 
 }

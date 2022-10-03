@@ -17,7 +17,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@drawable/round_icon"
         android:text="@string/active"
-        android:enabled="false"/>
+        android:enabled="false"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/user"
@@ -28,6 +29,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/greenButton"
         app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/black"
         />
 
     <TextView
@@ -39,6 +41,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/user"
         app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/black"
         />
 
 

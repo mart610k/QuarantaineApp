@@ -5,27 +5,19 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quarantaine.Classes.DatabaseHelper;
-import com.example.quarantaine.Classes.LocationModel;
-import com.google.android.gms.location.FusedLocationProviderClient;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity  {
     private ArrayList<String> permissionToRequest;
@@ -45,7 +37,13 @@ public class MainActivity extends AppCompatActivity  {
 
         Button btn = findViewById(R.id.login);
 
-
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActiveGPS.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

@@ -46,27 +46,13 @@ public class MainActivity extends AppCompatActivity  {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ActiveGPS.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
 
 
-        try {
 
-            FutureTask<APIResponse> task = new FutureTask<APIResponse>(new StringAPICaller("/api/token", "username", "Passw0rd!"));
-
-            APIResponse result = null;
-
-            new Thread(task).start();
-            Log.i("app", "Callng api Response");
-            result = task.get(5, TimeUnit.SECONDS);
-
-            Log.i("app", "Got Response");
-        }
-        catch (Exception e){
-            Log.i("app", "Some exception");
-        }
     }
 
     // Gets the needed permissions of the app

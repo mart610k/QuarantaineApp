@@ -155,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         if(!value){
             if (type.equals("password")) {
-                input.setError("6 tegn"+"\r\n" + "1 stort bogstav"+ "\r\n"+ "1 lille bogstav"+ "\r\n"+ "1 tegn"+ "\r\n" +"1 tal");
+                input.setError("1 stort bogstav"+ "\r\n"+ "1 lille bogstav"+ "\r\n"+ "1 tegn"+ "\r\n" +"1 tal");
             }
             input.setBackgroundColor(Color.parseColor("#ffa0a0"));
         } else {

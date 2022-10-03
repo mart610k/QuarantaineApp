@@ -5,14 +5,18 @@ import android.util.Log;
 import com.example.quarantaine.DTO.APIResponse;
 import com.example.quarantaine.MainActivity;
 import com.example.quarantaine.service.JSONApiCaller;
+import com.example.quarantaine.service.StringAPICaller;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.json.JSONObject;
 
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 
+import dk.quarantaine.commons.dto.OauthTokenResponseDTO;
 import dk.quarantaine.commons.dto.RegisterUserDTO;
 
 public class UserLogic {
-
 
     // Laver Registrer bruger objektet og sender videre til Service
     public static boolean RegisterUser(String username, String password, String name, String phoneNumber) {
@@ -58,5 +62,6 @@ public class UserLogic {
         }
         return reply;
     }
+
 
 }

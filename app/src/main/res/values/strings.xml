@@ -8,4 +8,7 @@
     <string name="name">Navn</string>
     <string name="phone">Telefon Nummer</string>
     <string name="repeat_password">Gentag Password</string>
+    <string name="active">Aktiv</string>
+    <string name="user">Hej Bruger</string>
+    <string name="quarantaine">Din karantæneperioder er 7 dage</string>
 </resources>

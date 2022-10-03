@@ -29,18 +29,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity  {
-    LocationManager manager;
-
-    private static final int HANDLER_DELAY = 1000;
     private ArrayList<String> permissionToRequest;
     private ArrayList<String> rejectedPermissions = new ArrayList();
     private ArrayList<String> permissions = new ArrayList();
-    private LocationModel locationModel;
 
 
 
     private final static int ALL_PERMISSIONS_RESULT = 101;
-    private final static long LOCATION_GET_DATA_DELAY = 1000L*60L*2L;
     private final DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
     @SuppressLint("MissingPermission")
     @Override
@@ -49,47 +44,9 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         GetPermissions();
 
-        LocationListener locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location location) {
-
-                // Try and see if you can create the location model, Error toast in case it doesn't work
-                try {
-                    locationModel = new LocationModel(-1,location.getLatitude(),location.getLongitude(), Calendar.getInstance().getTime());
-                }
-                catch (Exception e) {
-                    Toast.makeText(MainActivity.this, "Error Inserting Location Data", Toast.LENGTH_SHORT).show();
-                    locationModel = new LocationModel(-1,0,0, Calendar.getInstance().getTime());
-                }
-
-                // Calls the addLocation function of our datahelper & returns a bool
-                Boolean locationAdded = databaseHelper.addLocation(locationModel);
-
-                // toasting whether it was successful or not
-                Toast.makeText(MainActivity.this, "Location added successful: " + locationAdded, Toast.LENGTH_SHORT).show();
-
-                databaseHelper.close();
-            }
-        };
-
-
         Button btn = findViewById(R.id.login);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean delete = databaseHelper.deleteLocation();
-                if(delete) {
-                    Toast.makeText(MainActivity.this, "Deleted Data Successfully", Toast.LENGTH_SHORT).show();
-                }
-                databaseHelper.close();
 
-            }
-        });
-
-        // Uses the location manager to get GPS lokation every 2 minutes
-        manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,LOCATION_GET_DATA_DELAY,0F, locationListener);
 
     }
 
@@ -155,7 +112,6 @@ public class MainActivity extends AppCompatActivity  {
                 break;
         }
     }
-
 
     // Shows a message in an alert dialog
     private void ShowMessageOKCancel(String message, DialogInterface.OnClickListener onClickListener) {

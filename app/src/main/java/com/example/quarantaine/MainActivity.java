@@ -5,20 +5,16 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 import com.example.quarantaine.DTO.APIResponse;
 import com.example.quarantaine.service.JSONApiCaller;
 import com.example.quarantaine.service.StringAPICaller;
+import android.widget.Button;
 
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
@@ -26,12 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quarantaine.Classes.DatabaseHelper;
-import com.example.quarantaine.Classes.LocationModel;
-import com.google.android.gms.location.FusedLocationProviderClient;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity  {
     private ArrayList<String> permissionToRequest;
@@ -51,19 +43,13 @@ public class MainActivity extends AppCompatActivity  {
 
         Button btn = findViewById(R.id.login);
 
-
-
-    }
-
-    // Gets the needed permissions of the app
-    public void GetPermissions() {
-        permissions.add(ACCESS_FINE_LOCATION);
-        permissions.add(ACCESS_COARSE_LOCATION);
-
-        permissionToRequest = findUnaskedPermission(permissions);
-
-        if (permissionToRequest.size() > 0) {
-            requestPermissions((String[]) permissionToRequest.toArray(new String[permissionToRequest.size()]), ALL_PERMISSIONS_RESULT);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActiveGPS.class);
+                startActivity(intent);
+            }
+        });
 
 
         try {
@@ -80,6 +66,18 @@ public class MainActivity extends AppCompatActivity  {
         }
         catch (Exception e){
             Log.i("app", "Some exception");
+        }
+    }
+
+    // Gets the needed permissions of the app
+    public void GetPermissions() {
+        permissions.add(ACCESS_FINE_LOCATION);
+        permissions.add(ACCESS_COARSE_LOCATION);
+
+        permissionToRequest = findUnaskedPermission(permissions);
+
+        if (permissionToRequest.size() > 0) {
+            requestPermissions((String[]) permissionToRequest.toArray(new String[permissionToRequest.size()]), ALL_PERMISSIONS_RESULT);
         }
     }
 

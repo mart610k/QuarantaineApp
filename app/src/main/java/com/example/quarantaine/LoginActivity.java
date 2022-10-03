@@ -8,7 +8,6 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.quarantaine.Classes.AccessTokenDatabaseAccess;
 import com.example.quarantaine.Classes.DatabaseHelper;
 import com.example.quarantaine.DTO.APIResponse;
 import com.example.quarantaine.service.StringAPICaller;
@@ -24,8 +23,7 @@ import lombok.extern.jackson.Jacksonized;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private final AccessTokenDatabaseAccess databaseHelper = new AccessTokenDatabaseAccess(LoginActivity.this);
-
+    private final DatabaseHelper databaseHelper = new DatabaseHelper(LoginActivity.this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

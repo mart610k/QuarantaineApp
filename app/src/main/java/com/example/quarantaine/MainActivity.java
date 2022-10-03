@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
 import com.example.quarantaine.DTO.APIResponse;
 import com.example.quarantaine.service.JSONApiCaller;
 import com.example.quarantaine.service.StringAPICaller;
@@ -31,7 +32,6 @@ public class MainActivity extends AppCompatActivity  {
     private ArrayList<String> permissions = new ArrayList();
 
 
-
     private final static int ALL_PERMISSIONS_RESULT = 101;
     private final DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
     @SuppressLint("MissingPermission")
@@ -40,6 +40,13 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getPermissions();
+
+        String user = databaseHelper.getLoggedInUser();
+
+        if(user != null){
+            sendToActiveGPS();
+            return;
+        }
 
         Button btn = findViewById(R.id.login);
 
@@ -133,4 +140,9 @@ public class MainActivity extends AppCompatActivity  {
         startActivity(changePage);
     }
 
+    // Changes to the register Page
+    public void sendToActiveGPS(){
+        Intent changePage = new Intent(MainActivity.this,ActiveGPS.class);
+        startActivity(changePage);
+    }
 }

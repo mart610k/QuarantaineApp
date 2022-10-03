@@ -1,10 +1,17 @@
 package com.example.quarantaine.Classes;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import java.util.Calendar;
+import java.util.Date;
+
+import dk.quarantaine.commons.dto.OauthTokenResponseDTO;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
 
@@ -13,6 +20,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String COLUMN_LON = "LON";
     private static final String COLUMN_TIME = "TIME";
     private static final String COLUMN_ID = "ID";
+
+    private static final String ACCESSTOKEN_TABLE = "ACCESSTOKEN";
+    private static final String ACCESS_TOKEN = "access_token";
+    private static final String REFRESH_TOKEN = "refresh_token";
+    private static final String VALIDITY = "validity";
+    private static final String TOKEN_TYPE = "token_type";
+    private static final String USERNAME = "username";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, "quarantaine.db", null, 1);
@@ -24,7 +38,27 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         String createTableStatement = "CREATE TABLE " + LOCATION_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_LAT + " DOUBLE, " + COLUMN_LON + " DOUBLE, " + COLUMN_TIME + " DATE)";
 
         db.execSQL(createTableStatement);
+
+        String createTableStatementAccesstoken = "CREATE TABLE " + ACCESSTOKEN_TABLE + " (" + USERNAME + " TEXT PRIMARY KEY NOT NULL, " + ACCESS_TOKEN + " TEXT, " + REFRESH_TOKEN + " TEXT, "+ TOKEN_TYPE +" TEXT, "+ VALIDITY + " DATE)";
+
+        db.execSQL(createTableStatementAccesstoken);
     }
+
+    public String getLoggedInUser(){
+        String username = null;
+        int result = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] tables = new String[]{USERNAME};
+        Cursor cursor = db.rawQuery("SELECT USERNAME FROM "+ ACCESSTOKEN_TABLE + " LIMIT 1;",null);
+
+        while(cursor.moveToNext()) {
+            username = cursor.getString(0);
+        }
+
+
+        return username;
+    }
+
     // Called everytime the database version updates
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -57,5 +91,140 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         else {
             return false;
         }
+    }
+
+    public boolean insertOrUpdateAccessToken(String username, OauthTokenResponseDTO tokenResponseDTO){
+        if(doesEntryExist(username)){
+            return updateData(username,tokenResponseDTO);
+        }
+        else {
+            return insertData(username,tokenResponseDTO);
+        }
+    }
+
+    public boolean insertData (String username, OauthTokenResponseDTO tokenResponseDTO) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ACCESS_TOKEN, tokenResponseDTO.getAccess_token());
+        values.put(REFRESH_TOKEN, tokenResponseDTO.getRefresh_token());
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.SECOND,tokenResponseDTO.getValidity());
+        Date time = cal.getTime();
+        values.put(VALIDITY, time.toString());
+        values.put(TOKEN_TYPE, tokenResponseDTO.getToken_type());
+        values.put(USERNAME, username);
+
+        long insert = db.insert(ACCESSTOKEN_TABLE, null, values);
+
+        if(insert == -1){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean updateData(String username, OauthTokenResponseDTO tokenResponseDTO) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ACCESS_TOKEN, tokenResponseDTO.getAccess_token());
+        values.put(REFRESH_TOKEN, tokenResponseDTO.getRefresh_token());
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.SECOND,tokenResponseDTO.getValidity());
+        Date time = cal.getTime();
+
+
+
+        values.put(VALIDITY, time.toString());
+        values.put(TOKEN_TYPE, tokenResponseDTO.getToken_type());
+
+
+        String[] usernamevalue = new String[]{username};
+
+        long insert = db.update(ACCESSTOKEN_TABLE, values,  USERNAME + " = ?", usernamevalue );
+
+        if(insert == -1){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean doesEntryExist(String username){
+        int result = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] tables = new String[]{USERNAME};
+        String[] selectionArg = new String[]{username};
+        Cursor cursor = db.query(
+                ACCESSTOKEN_TABLE,
+                tables,
+                USERNAME + " = ?",
+                selectionArg,
+                null,
+                null,
+                null
+        );
+        while(cursor.moveToNext()) {
+            result++;
+        }
+
+        if(result == 1){
+            return  true;
+        }
+        return false;
+    }
+
+    public OauthTokenResponseDTO getTokenByUsername(String username){
+
+        OauthTokenResponseDTO data = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] tables = new String[]{ACCESS_TOKEN,REFRESH_TOKEN,VALIDITY,TOKEN_TYPE,USERNAME};
+        String[] selectionArg = new String[]{username};
+        Cursor cursor = db.query(
+                ACCESSTOKEN_TABLE,
+                tables,
+                USERNAME + " = ?",
+                selectionArg,
+                null,
+                null,
+                null
+        );
+        while(cursor.moveToNext()){
+            try{
+                data = new OauthTokenResponseDTO();
+                for (String name: cursor.getColumnNames()) {
+                    int index = cursor.getColumnIndex(name);
+                    switch (name){
+                        case ACCESS_TOKEN:
+                            data.setAccess_token(cursor.getString(index));
+                            break;
+                        case REFRESH_TOKEN:
+                            data.setRefresh_token(cursor.getString(index));
+                            break;
+                        case TOKEN_TYPE:
+                            data.setToken_type(cursor.getString(index));
+                            break;
+                        case VALIDITY:
+                            Date date = Calendar.getInstance().getTime();
+                            Date tokenDate = new Date(cursor.getString(index));
+                            System.out.println(date);
+                            System.out.println(tokenDate);
+                            long time = tokenDate.getTime() - date.getTime();
+                            data.setValidity((int)time / 1000);
+                            break;
+                    }
+
+
+                }
+                Log.i("Database", "DAta found");
+            }
+            catch (Exception e){
+                Log.i("Database", "Data NOT found");
+            }
+        }
+        return  data;
     }
 }

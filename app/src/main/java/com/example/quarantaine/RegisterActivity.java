@@ -49,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Password & Listener
         EditText password = findViewById(R.id.password);
+        password.setError("1 stort bogstav"+ "\r\n"+ "1 lille bogstav"+ "\r\n"+ "1 tegn"+ "\r\n" +"1 tal" + "\r\n"+ "mindst 8 tegn");
         password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -155,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         if(!value){
             if (type.equals("password")) {
-                input.setError("1 stort bogstav"+ "\r\n"+ "1 lille bogstav"+ "\r\n"+ "1 tegn"+ "\r\n" +"1 tal");
+                input.setError("1 stort bogstav"+ "\r\n"+ "1 lille bogstav"+ "\r\n"+ "1 tegn"+ "\r\n" +"1 tal" + "\r\n"+ "mindst 8 tegn");
             }
             input.setBackgroundColor(Color.parseColor("#ffa0a0"));
         } else {

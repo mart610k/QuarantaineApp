@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity  {
     public void RegisterPageChange(View view){
         Intent changePage = new Intent(MainActivity.this,RegisterActivity.class);
         startActivity(changePage);
-
     }
 
 }

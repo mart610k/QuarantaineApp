@@ -20,7 +20,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import dk.quarantaine.commons.interfaces.JSONConverable;
 
-public class JSONApiCaller implements Callable<APIResponse> {
+public class JSONApiCaller extends BaseApiCaller implements Callable<APIResponse> {
 
     String endpoint;
     JSONConverable jsonConverable;
@@ -31,8 +31,12 @@ public class JSONApiCaller implements Callable<APIResponse> {
 
     }
 
+    //TODO Match the code of which the BaseAPICaller uses.
     @Override
     public APIResponse call() throws Exception{
+
+
+
             APIResponse response = null;
             HttpsURLConnection connection = null;
             try{
@@ -45,7 +49,6 @@ public class JSONApiCaller implements Callable<APIResponse> {
 
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("content-type", "application/json");
-
                 //extra data
                 //connection.setRequestProperty(map.key, map.data);
 
@@ -68,7 +71,7 @@ public class JSONApiCaller implements Callable<APIResponse> {
 
                 try{
                     BufferedReader in;
-                    if(responsecode > 200 && responsecode < 300){
+                    if(responsecode >= 200 && responsecode < 300){
                         in = new BufferedReader(new InputStreamReader(connection.getInputStream(),StandardCharsets.UTF_8));
                     }
                     else{

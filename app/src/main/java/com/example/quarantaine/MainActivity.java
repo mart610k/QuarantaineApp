@@ -9,9 +9,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import com.example.quarantaine.DTO.APIResponse;
+import com.example.quarantaine.service.JSONApiCaller;
+import com.example.quarantaine.service.StringAPICaller;
 import android.widget.Button;
 
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,10 +46,12 @@ public class MainActivity extends AppCompatActivity  {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ActiveGPS.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
+
+
 
     }
 
@@ -56,7 +64,6 @@ public class MainActivity extends AppCompatActivity  {
 
         if (permissionToRequest.size() > 0) {
             requestPermissions((String[]) permissionToRequest.toArray(new String[permissionToRequest.size()]), ALL_PERMISSIONS_RESULT);
-
         }
     }
 

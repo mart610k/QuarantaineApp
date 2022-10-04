@@ -15,6 +15,9 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.quarantaine.Classes.DatabaseHelper;
@@ -28,8 +31,9 @@ public class ActiveGPS extends AppCompatActivity {
 
     private LocationModel locationModel;
 
-    private final static long LOCATION_GET_DATA_DELAY = 1000L * 60L * 2L;
+    private final static long LOCATION_GET_DATA_DELAY = 4000L ;
     private final DatabaseHelper databaseHelper = new DatabaseHelper(ActiveGPS.this);
+    private int datacounter = 0;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -53,10 +57,20 @@ public class ActiveGPS extends AppCompatActivity {
                 // Calls the addLocation function of our datahelper & returns a bool
                 Boolean locationAdded = databaseHelper.addLocation(locationModel);
 
+
                 // toasting whether it was successful or not
                 Toast.makeText(ActiveGPS.this, "Location added successful: " + locationAdded, Toast.LENGTH_SHORT).show();
-
                 databaseHelper.close();
+
+                datacounter++;
+
+                // Shows current count of data
+                Toast.makeText(ActiveGPS.this, "Current amount of Data: " +datacounter+ ". Will delete data at 6 inputs", Toast.LENGTH_SHORT).show();
+
+                if(datacounter > 5) {
+                    deleteData();
+                    datacounter = 0;
+                }
             }
         };
 
@@ -64,5 +78,11 @@ public class ActiveGPS extends AppCompatActivity {
         manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, LOCATION_GET_DATA_DELAY, 0F, locationListener);
 
+    }
+
+    public void deleteData(){
+        boolean result = databaseHelper.deleteLocation();
+        if(result)
+            Toast.makeText(ActiveGPS.this, "Data Deleted", Toast.LENGTH_SHORT).show();
     }
 }

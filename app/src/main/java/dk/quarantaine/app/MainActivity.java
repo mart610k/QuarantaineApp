@@ -137,5 +137,6 @@ public class MainActivity extends AppCompatActivity  {
     public void sendToActiveGPS(){
         Intent changePage = new Intent(MainActivity.this,ActiveGPS.class);
         startActivity(changePage);
+        this.finish();
     }
 }

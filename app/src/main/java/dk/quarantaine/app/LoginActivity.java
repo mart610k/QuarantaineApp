@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
 
             Intent changePage = new Intent(LoginActivity.this,ActiveGPS.class);
             startActivity(changePage);
+            this.finish();
         }
     }
 

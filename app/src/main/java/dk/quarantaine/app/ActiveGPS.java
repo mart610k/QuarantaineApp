@@ -83,6 +83,12 @@ public class ActiveGPS extends AppCompatActivity {
 
     }
 
+    // Stops user from going back by the arrow button
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Back button not implemented", Toast.LENGTH_SHORT).show();
+    }
+
     /**
      * Method that deletes Location Data
      */

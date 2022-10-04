@@ -48,6 +48,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL(createTableStatementAccesstoken);
     }
 
+    /**
+     * Gets the currently logged in user
+     * @return the name of the user.
+     */
     public String getLoggedInUser(){
         String username = null;
         int result = 0;
@@ -68,6 +72,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     }
 
+
+    /**
+     * Insert location data into local datbase
+     * @param locationModel data to insert
+     * @return if data was inserted
+     */
     public boolean addLocation(LocationModel locationModel){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -85,6 +95,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
+    /**
+     * Delete the location data from the local database
+     * @return if data was saved
+     */
     public boolean deleteLocation() {
         SQLiteDatabase db = this.getWritableDatabase();
         int delete = db.delete(LOCATION_TABLE, null, null);
@@ -96,16 +110,28 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
+    /**
+     * Inserts or updates access token data in database
+     * @param username the username to update data for
+     * @param tokenResponseDTO the new data to save
+     * @return if data was updated.
+     */
     public boolean insertOrUpdateAccessToken(String username, OauthTokenResponseDTO tokenResponseDTO){
-        if(doesEntryExist(username)){
-            return updateData(username,tokenResponseDTO);
+        if(doesUserEntryExist(username)){
+            return updateDataAccessToken(username,tokenResponseDTO);
         }
         else {
-            return insertData(username,tokenResponseDTO);
+            return insertDataAccessToken(username,tokenResponseDTO);
         }
     }
 
-    public boolean insertData (String username, OauthTokenResponseDTO tokenResponseDTO) {
+    /**
+     * Inserts data on access token in database
+     * @param username username to update for
+     * @param tokenResponseDTO the access data to save
+     * @return if data was saved
+     */
+    public boolean insertDataAccessToken (String username, OauthTokenResponseDTO tokenResponseDTO) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -128,7 +154,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
-    public boolean updateData(String username, OauthTokenResponseDTO tokenResponseDTO) {
+    /**
+     * Updates existing data on access token
+     * @param username username to update on
+     * @param tokenResponseDTO the data to update with
+     * @return if data was updated
+     */
+    public boolean updateDataAccessToken(String username, OauthTokenResponseDTO tokenResponseDTO) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -156,7 +188,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
-    private boolean doesEntryExist(String username){
+    /**
+     * Gets if the user entry exists
+     * @param username the username to check on
+     * @return if the user exists
+     */
+    private boolean doesUserEntryExist(String username){
         int result = 0;
         SQLiteDatabase db = this.getReadableDatabase();
         String[] tables = new String[]{ACCESSTOKEN_COLUMN_USERNAME};
@@ -180,7 +217,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return false;
     }
 
-    public OauthTokenResponseDTO getTokenByUsername(String username){
+    /**
+     * Gets the access token based on username
+     * @param username the username to get information
+     * @return the access token data.
+     */
+    public OauthTokenResponseDTO getAccessTokenByUsername(String username){
 
         OauthTokenResponseDTO data = null;
         SQLiteDatabase db = this.getReadableDatabase();

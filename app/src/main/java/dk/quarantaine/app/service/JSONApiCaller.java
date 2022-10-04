@@ -2,7 +2,7 @@ package dk.quarantaine.app.service;
 
 import android.util.Log;
 
-import dk.quarantaine.app.DTO.APIResponse;
+import dk.quarantaine.app.datamodel.APIResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;

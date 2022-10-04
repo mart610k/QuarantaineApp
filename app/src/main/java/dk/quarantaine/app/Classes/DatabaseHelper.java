@@ -1,4 +1,8 @@
-package dk.quarantaine.app.Classes;
+package dk.quarantaine.app.classes;
+
+import dk.quarantaine.commons.dto.OauthTokenResponseDTO;
+import dk.quarantaine.app.datamodel.LocationModel;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -6,27 +10,27 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+
 import androidx.annotation.Nullable;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import dk.quarantaine.commons.dto.OauthTokenResponseDTO;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     private static final String LOCATION_TABLE = "LOCATION_TABLE";
-    private static final String COLUMN_LAT = "LAT";
-    private static final String COLUMN_LON = "LON";
-    private static final String COLUMN_TIME = "TIME";
-    private static final String COLUMN_ID = "ID";
+    private static final String LOCATION_COLUMN_LAT = "LAT";
+    private static final String LOCATION_COLUMN_LON = "LON";
+    private static final String LOCATION_COLUMN_TIME = "TIME";
+    private static final String LOCATION_COLUMN_ID = "ID";
 
     private static final String ACCESSTOKEN_TABLE = "ACCESSTOKEN";
-    private static final String ACCESS_TOKEN = "access_token";
-    private static final String REFRESH_TOKEN = "refresh_token";
-    private static final String VALIDITY = "validity";
-    private static final String TOKEN_TYPE = "token_type";
-    private static final String USERNAME = "username";
+    private static final String ACCESSTOKEN_COLUMN_ACCESS_TOKEN = "access_token";
+    private static final String ACCESSTOKEN_COLUMN_REFRESH_TOKEN = "refresh_token";
+    private static final String ACCESSTOKEN_COLUMN_VALIDITY = "validity";
+    private static final String ACCESSTOKEN_COLUMN_TOKEN_TYPE = "token_type";
+    private static final String ACCESSTOKEN_COLUMN_USERNAME = "username";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, "quarantaine.db", null, 1);
@@ -35,11 +39,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     // This is going to be called the first a database is accessed, should be code to generate new table
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + LOCATION_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_LAT + " DOUBLE, " + COLUMN_LON + " DOUBLE, " + COLUMN_TIME + " DATE)";
+        String createTableStatement = "CREATE TABLE " + LOCATION_TABLE + " (" + LOCATION_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + LOCATION_COLUMN_LAT + " DOUBLE, " + LOCATION_COLUMN_LON + " DOUBLE, " + LOCATION_COLUMN_TIME + " DATE)";
 
         db.execSQL(createTableStatement);
 
-        String createTableStatementAccesstoken = "CREATE TABLE " + ACCESSTOKEN_TABLE + " (" + USERNAME + " TEXT PRIMARY KEY NOT NULL, " + ACCESS_TOKEN + " TEXT, " + REFRESH_TOKEN + " TEXT, "+ TOKEN_TYPE +" TEXT, "+ VALIDITY + " DATE)";
+        String createTableStatementAccesstoken = "CREATE TABLE " + ACCESSTOKEN_TABLE + " (" + ACCESSTOKEN_COLUMN_USERNAME + " TEXT PRIMARY KEY NOT NULL, " + ACCESSTOKEN_COLUMN_ACCESS_TOKEN + " TEXT, " + ACCESSTOKEN_COLUMN_REFRESH_TOKEN + " TEXT, "+ ACCESSTOKEN_COLUMN_TOKEN_TYPE +" TEXT, "+ ACCESSTOKEN_COLUMN_VALIDITY + " DATE)";
 
         db.execSQL(createTableStatementAccesstoken);
     }
@@ -48,13 +52,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         String username = null;
         int result = 0;
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] tables = new String[]{USERNAME};
+        String[] tables = new String[]{ACCESSTOKEN_COLUMN_USERNAME};
         Cursor cursor = db.rawQuery("SELECT USERNAME FROM "+ ACCESSTOKEN_TABLE + " LIMIT 1;",null);
 
         while(cursor.moveToNext()) {
             username = cursor.getString(0);
         }
-
 
         return username;
     }
@@ -69,9 +72,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(COLUMN_LAT, locationModel.getLat());
-        values.put(COLUMN_LON, locationModel.getLon());
-        values.put(COLUMN_TIME, locationModel.getTime().toString());
+        values.put(LOCATION_COLUMN_LAT, locationModel.getLat());
+        values.put(LOCATION_COLUMN_LON, locationModel.getLon());
+        values.put(LOCATION_COLUMN_TIME, locationModel.getTime().toString());
 
         long insert = db.insert(LOCATION_TABLE, null, values);
 
@@ -106,15 +109,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(ACCESS_TOKEN, tokenResponseDTO.getAccess_token());
-        values.put(REFRESH_TOKEN, tokenResponseDTO.getRefresh_token());
+        values.put(ACCESSTOKEN_COLUMN_ACCESS_TOKEN, tokenResponseDTO.getAccess_token());
+        values.put(ACCESSTOKEN_COLUMN_REFRESH_TOKEN, tokenResponseDTO.getRefresh_token());
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.SECOND,tokenResponseDTO.getValidity());
         Date time = cal.getTime();
-        values.put(VALIDITY, time.toString());
-        values.put(TOKEN_TYPE, tokenResponseDTO.getToken_type());
-        values.put(USERNAME, username);
+        values.put(ACCESSTOKEN_COLUMN_VALIDITY, time.toString());
+        values.put(ACCESSTOKEN_COLUMN_TOKEN_TYPE, tokenResponseDTO.getToken_type());
+        values.put(ACCESSTOKEN_COLUMN_USERNAME, username);
 
         long insert = db.insert(ACCESSTOKEN_TABLE, null, values);
 
@@ -129,8 +132,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(ACCESS_TOKEN, tokenResponseDTO.getAccess_token());
-        values.put(REFRESH_TOKEN, tokenResponseDTO.getRefresh_token());
+        values.put(ACCESSTOKEN_COLUMN_ACCESS_TOKEN, tokenResponseDTO.getAccess_token());
+        values.put(ACCESSTOKEN_COLUMN_REFRESH_TOKEN, tokenResponseDTO.getRefresh_token());
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.SECOND,tokenResponseDTO.getValidity());
@@ -138,13 +141,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 
 
-        values.put(VALIDITY, time.toString());
-        values.put(TOKEN_TYPE, tokenResponseDTO.getToken_type());
+        values.put(ACCESSTOKEN_COLUMN_VALIDITY, time.toString());
+        values.put(ACCESSTOKEN_COLUMN_TOKEN_TYPE, tokenResponseDTO.getToken_type());
 
 
         String[] usernamevalue = new String[]{username};
 
-        long insert = db.update(ACCESSTOKEN_TABLE, values,  USERNAME + " = ?", usernamevalue );
+        long insert = db.update(ACCESSTOKEN_TABLE, values,  ACCESSTOKEN_COLUMN_USERNAME + " = ?", usernamevalue );
 
         if(insert == -1){
             return false;
@@ -156,12 +159,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private boolean doesEntryExist(String username){
         int result = 0;
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] tables = new String[]{USERNAME};
+        String[] tables = new String[]{ACCESSTOKEN_COLUMN_USERNAME};
         String[] selectionArg = new String[]{username};
         Cursor cursor = db.query(
                 ACCESSTOKEN_TABLE,
                 tables,
-                USERNAME + " = ?",
+                ACCESSTOKEN_COLUMN_USERNAME + " = ?",
                 selectionArg,
                 null,
                 null,
@@ -181,12 +184,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
         OauthTokenResponseDTO data = null;
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] tables = new String[]{ACCESS_TOKEN,REFRESH_TOKEN,VALIDITY,TOKEN_TYPE,USERNAME};
+        String[] tables = new String[]{ACCESSTOKEN_COLUMN_ACCESS_TOKEN,ACCESSTOKEN_COLUMN_REFRESH_TOKEN,ACCESSTOKEN_COLUMN_VALIDITY,ACCESSTOKEN_COLUMN_TOKEN_TYPE,ACCESSTOKEN_COLUMN_USERNAME};
         String[] selectionArg = new String[]{username};
         Cursor cursor = db.query(
                 ACCESSTOKEN_TABLE,
                 tables,
-                USERNAME + " = ?",
+                ACCESSTOKEN_COLUMN_USERNAME + " = ?",
                 selectionArg,
                 null,
                 null,
@@ -198,16 +201,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                 for (String name: cursor.getColumnNames()) {
                     int index = cursor.getColumnIndex(name);
                     switch (name){
-                        case ACCESS_TOKEN:
+                        case ACCESSTOKEN_COLUMN_ACCESS_TOKEN:
                             data.setAccess_token(cursor.getString(index));
                             break;
-                        case REFRESH_TOKEN:
+                        case ACCESSTOKEN_COLUMN_REFRESH_TOKEN:
                             data.setRefresh_token(cursor.getString(index));
                             break;
-                        case TOKEN_TYPE:
+                        case ACCESSTOKEN_COLUMN_TOKEN_TYPE:
                             data.setToken_type(cursor.getString(index));
                             break;
-                        case VALIDITY:
+                        case ACCESSTOKEN_COLUMN_VALIDITY:
                             Date date = Calendar.getInstance().getTime();
                             Date tokenDate = new Date(cursor.getString(index));
                             System.out.println(date);
@@ -219,7 +222,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 
                 }
-                Log.i("Database", "DAta found");
+                Log.i("Database", "Data found");
             }
             catch (Exception e){
                 Log.i("Database", "Data NOT found");

@@ -1,4 +1,4 @@
-package dk.quarantaine.app.DTO;
+package dk.quarantaine.app.datamodel;
 
 
 public class APIResponse {

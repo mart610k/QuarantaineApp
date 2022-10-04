@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quarantaine.Classes.DatabaseHelper;
@@ -31,7 +32,7 @@ public class ActiveGPS extends AppCompatActivity {
 
     private LocationModel locationModel;
 
-    private final static long LOCATION_GET_DATA_DELAY = 1000L*60L*2L ;
+    private final static long LOCATION_GET_DATA_DELAY = 1000L*10L ;
     private final DatabaseHelper databaseHelper = new DatabaseHelper(ActiveGPS.this);
     private int datacounter = 0;
 
@@ -40,7 +41,8 @@ public class ActiveGPS extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_gps);
-
+        TextView user = findViewById(R.id.user);
+        user.setText("Hej " + databaseHelper.getLoggedInUser());
 
         LocationListener locationListener = new LocationListener() {
             @Override

@@ -1,4 +1,4 @@
-package com.example.quarantaine.DTO;
+package dk.quarantaine.app.DTO;
 
 
 public class APIResponse {

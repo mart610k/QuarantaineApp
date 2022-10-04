@@ -1,4 +1,4 @@
-package com.example.quarantaine;
+package dk.quarantaine.app;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -17,8 +17,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.quarantaine.Classes.DatabaseHelper;
-import com.example.quarantaine.Classes.LocationModel;
+import dk.quarantaine.app.Classes.DatabaseHelper;
+import dk.quarantaine.app.Classes.LocationModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;

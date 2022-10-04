@@ -1,11 +1,11 @@
-package com.example.quarantaine.service;
+package dk.quarantaine.app.service;
 
 import static java.net.URLEncoder.encode;
 
 import android.util.Log;
 import android.util.Xml;
 
-import com.example.quarantaine.DTO.APIResponse;
+import dk.quarantaine.app.DTO.APIResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;

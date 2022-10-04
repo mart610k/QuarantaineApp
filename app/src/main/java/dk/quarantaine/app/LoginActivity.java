@@ -50,8 +50,8 @@ public class LoginActivity extends AppCompatActivity {
      * waits for a reply of the api call
      * creates the token based on returned Json object
      * inserts user to local App database
-     * @param username
-     * @param password
+     * @param username Username that authenicate
+     * @param password the password to authenticate with
      */
     public void LoginUser(String username, String password){
 
@@ -87,6 +87,4 @@ public class LoginActivity extends AppCompatActivity {
             this.finish();
         }
     }
-
-    //OauthTokenResponseDTO token = databaseHelper.getTokenByUsername("username");
 }

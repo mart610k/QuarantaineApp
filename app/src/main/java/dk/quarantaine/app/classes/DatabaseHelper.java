@@ -148,7 +148,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      * @return if data was saved
      */
     public boolean insertDataAccessToken (String username, OauthTokenResponseDTO tokenResponseDTO) {
-        deleteUser();
+        deleteUsers();
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -177,7 +177,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      * @param tokenResponseDTO the data to update with
      * @return if data was updated
      */
-    public boolean updateData(String username, OauthTokenResponseDTO tokenResponseDTO) {
+    public boolean updateDataAccessToken(String username, OauthTokenResponseDTO tokenResponseDTO) {
         deleteUsers();
         try {
 
@@ -196,7 +196,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             values.put(ACCESSTOKEN_COLUMN_TOKEN_TYPE, tokenResponseDTO.getToken_type());
             String[] usernamevalue = new String[]{username};
 
-            long insert = db.update(ACCESSTOKEN_TABLE, values,  USERNAME + " = ?", usernamevalue );
+            long insert = db.update(ACCESSTOKEN_TABLE, values,  ACCESSTOKEN_COLUMN_USERNAME + " = ?", usernamevalue );
 
             if(insert == -1){
                 return false;

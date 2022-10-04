@@ -27,13 +27,14 @@ import dk.quarantaine.app.classes.DatabaseHelper;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity  {
+    // Properties
     private ArrayList<String> permissionToRequest;
     private ArrayList<String> rejectedPermissions = new ArrayList();
     private ArrayList<String> permissions = new ArrayList();
-
-
     private final static int ALL_PERMISSIONS_RESULT = 101;
     private final DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
+
+
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,19 +48,6 @@ public class MainActivity extends AppCompatActivity  {
             sendToActiveGPS();
             return;
         }
-
-        Button btn = findViewById(R.id.login);
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-
     }
 
     // Gets the needed permissions of the app
@@ -134,13 +122,18 @@ public class MainActivity extends AppCompatActivity  {
                 .show();
     }
 
-    // Changes to the register Page
-    public void registerPageChange(View view){
+    // Changes to the register page
+    public void sendToRegisterPage(View view){
         Intent changePage = new Intent(MainActivity.this,RegisterActivity.class);
         startActivity(changePage);
     }
+    // Changes to the login page
+    public void sendToLoginPage(View view) {
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
 
-    // Changes to the register Page
+    // Changes to the register page
     public void sendToActiveGPS(){
         Intent changePage = new Intent(MainActivity.this,ActiveGPS.class);
         startActivity(changePage);

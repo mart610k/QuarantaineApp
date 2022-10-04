@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
             OauthTokenResponseDTO tokenDTO = mapper.readValue(object.toString(2), OauthTokenResponseDTO.class);
 
-             loggedIn = databaseHelper.insertOrUpdateAccessToken("username", tokenDTO);
+             loggedIn = databaseHelper.insertOrUpdateAccessToken(username, tokenDTO);
 
             Log.i("app", "Got Response");
         }

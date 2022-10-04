@@ -53,6 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      * @return the name of the user.
      */
     public String getLoggedInUser(){
+
         String username = null;
         int result = 0;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -62,8 +63,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         while(cursor.moveToNext()) {
             username = cursor.getString(0);
         }
-
         return username;
+    }
+
+    public boolean deleteUser() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int delete = db.delete(ACCESSTOKEN_TABLE, null, null);
+        if(delete > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     // Called everytime the database version updates
@@ -117,6 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      * @return if data was updated.
      */
     public boolean insertOrUpdateAccessToken(String username, OauthTokenResponseDTO tokenResponseDTO){
+        deleteUser();
         if(doesUserEntryExist(username)){
             return updateDataAccessToken(username,tokenResponseDTO);
         }
@@ -132,6 +144,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      * @return if data was saved
      */
     public boolean insertDataAccessToken (String username, OauthTokenResponseDTO tokenResponseDTO) {
+        deleteUser();
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -154,38 +167,43 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
+
     /**
      * Updates existing data on access token
      * @param username username to update on
      * @param tokenResponseDTO the data to update with
      * @return if data was updated
      */
-    public boolean updateDataAccessToken(String username, OauthTokenResponseDTO tokenResponseDTO) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    public boolean updateData(String username, OauthTokenResponseDTO tokenResponseDTO) {
+        deleteUser();
+        try {
 
-        ContentValues values = new ContentValues();
-        values.put(ACCESSTOKEN_COLUMN_ACCESS_TOKEN, tokenResponseDTO.getAccess_token());
-        values.put(ACCESSTOKEN_COLUMN_REFRESH_TOKEN, tokenResponseDTO.getRefresh_token());
-
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND,tokenResponseDTO.getValidity());
-        Date time = cal.getTime();
+            SQLiteDatabase db = this.getWritableDatabase();
 
 
+            ContentValues values = new ContentValues();
+            values.put(ACCESSTOKEN_COLUMN_ACCESS_TOKEN, tokenResponseDTO.getAccess_token());
+            values.put(ACCESSTOKEN_COLUMN_REFRESH_TOKEN, tokenResponseDTO.getRefresh_token());
 
-        values.put(ACCESSTOKEN_COLUMN_VALIDITY, time.toString());
-        values.put(ACCESSTOKEN_COLUMN_TOKEN_TYPE, tokenResponseDTO.getToken_type());
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.SECOND,tokenResponseDTO.getValidity());
+            Date time = cal.getTime();
 
+            values.put(ACCESSTOKEN_COLUMN_VALIDITY, time.toString());
+            values.put(ACCESSTOKEN_COLUMN_TOKEN_TYPE, tokenResponseDTO.getToken_type());
+            String[] usernamevalue = new String[]{username};
 
-        String[] usernamevalue = new String[]{username};
+            long insert = db.update(ACCESSTOKEN_TABLE, values,  USERNAME + " = ?", usernamevalue );
 
-        long insert = db.update(ACCESSTOKEN_TABLE, values,  ACCESSTOKEN_COLUMN_USERNAME + " = ?", usernamevalue );
-
-        if(insert == -1){
-            return false;
-        } else {
-            return true;
+            if(insert == -1){
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            return  false;
         }
+
     }
 
     /**

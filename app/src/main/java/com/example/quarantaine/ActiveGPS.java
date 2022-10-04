@@ -31,7 +31,7 @@ public class ActiveGPS extends AppCompatActivity {
 
     private LocationModel locationModel;
 
-    private final static long LOCATION_GET_DATA_DELAY = 4000L ;
+    private final static long LOCATION_GET_DATA_DELAY = 1000L*60L*2L ;
     private final DatabaseHelper databaseHelper = new DatabaseHelper(ActiveGPS.this);
     private int datacounter = 0;
 

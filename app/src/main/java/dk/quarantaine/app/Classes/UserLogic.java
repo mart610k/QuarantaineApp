@@ -1,10 +1,10 @@
-package com.example.quarantaine.Classes;
+package dk.quarantaine.app.Classes;
 
 import android.util.Log;
 
-import com.example.quarantaine.DTO.APIResponse;
-import com.example.quarantaine.service.JSONApiCaller;
-import com.example.quarantaine.service.StringAPICaller;
+import dk.quarantaine.app.DTO.APIResponse;
+import dk.quarantaine.app.service.JSONApiCaller;
+import dk.quarantaine.app.service.StringAPICaller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;

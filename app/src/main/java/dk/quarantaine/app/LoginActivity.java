@@ -1,4 +1,4 @@
-package com.example.quarantaine;
+package dk.quarantaine.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,9 +8,9 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.quarantaine.Classes.DatabaseHelper;
-import com.example.quarantaine.DTO.APIResponse;
-import com.example.quarantaine.service.StringAPICaller;
+import dk.quarantaine.app.Classes.DatabaseHelper;
+import dk.quarantaine.app.DTO.APIResponse;
+import dk.quarantaine.app.service.StringAPICaller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;

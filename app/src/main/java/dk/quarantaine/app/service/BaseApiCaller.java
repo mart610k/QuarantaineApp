@@ -1,8 +1,8 @@
-package com.example.quarantaine.service;
+package dk.quarantaine.app.service;
 
 import android.util.Log;
 
-import com.example.quarantaine.DTO.APIResponse;
+import dk.quarantaine.app.DTO.APIResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;

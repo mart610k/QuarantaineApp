@@ -1,4 +1,4 @@
-package com.example.quarantaine.Classes;
+package dk.quarantaine.app.Classes;
 
 import android.util.Log;
 

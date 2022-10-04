@@ -1,4 +1,4 @@
-package com.example.quarantaine.Classes;
+package dk.quarantaine.app.Classes;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

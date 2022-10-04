@@ -1,4 +1,4 @@
-package com.example.quarantaine;
+package dk.quarantaine.app;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -12,9 +12,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.example.quarantaine.DTO.APIResponse;
-import com.example.quarantaine.service.JSONApiCaller;
-import com.example.quarantaine.service.StringAPICaller;
+import dk.quarantaine.app.DTO.APIResponse;
+import dk.quarantaine.app.service.JSONApiCaller;
+import dk.quarantaine.app.service.StringAPICaller;
 import android.widget.Button;
 
 import java.util.concurrent.FutureTask;
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.quarantaine.Classes.DatabaseHelper;
+import dk.quarantaine.app.Classes.DatabaseHelper;
 
 import java.util.ArrayList;
 

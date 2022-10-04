@@ -5,7 +5,7 @@ import static java.net.URLEncoder.encode;
 import android.util.Log;
 import android.util.Xml;
 
-import dk.quarantaine.app.DTO.APIResponse;
+import dk.quarantaine.app.datamodel.APIResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;

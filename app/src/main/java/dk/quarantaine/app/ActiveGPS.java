@@ -21,9 +21,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import dk.quarantaine.app.Classes.DatabaseHelper;
-import dk.quarantaine.app.Classes.LocationModel;
+import dk.quarantaine.app.classes.DatabaseHelper;
+import dk.quarantaine.app.datamodel.LocationModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;

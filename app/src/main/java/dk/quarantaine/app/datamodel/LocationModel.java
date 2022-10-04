@@ -1,4 +1,4 @@
-package dk.quarantaine.app.Classes;
+package dk.quarantaine.app.datamodel;
 
 import java.util.Date;
 

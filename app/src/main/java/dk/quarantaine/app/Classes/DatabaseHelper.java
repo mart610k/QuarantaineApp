@@ -66,7 +66,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return username;
     }
 
-    public boolean deleteUser() {
+    /**
+     * Deletes the table containing the user(s)
+     * @return if data was deleted.
+     */
+    public boolean deleteUsers() {
         SQLiteDatabase db = this.getWritableDatabase();
         int delete = db.delete(ACCESSTOKEN_TABLE, null, null);
         if(delete > 0) {
@@ -128,7 +132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      * @return if data was updated.
      */
     public boolean insertOrUpdateAccessToken(String username, OauthTokenResponseDTO tokenResponseDTO){
-        deleteUser();
+        deleteUsers();
         if(doesUserEntryExist(username)){
             return updateDataAccessToken(username,tokenResponseDTO);
         }
@@ -167,7 +171,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
-
     /**
      * Updates existing data on access token
      * @param username username to update on
@@ -175,7 +178,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      * @return if data was updated
      */
     public boolean updateData(String username, OauthTokenResponseDTO tokenResponseDTO) {
-        deleteUser();
+        deleteUsers();
         try {
 
             SQLiteDatabase db = this.getWritableDatabase();

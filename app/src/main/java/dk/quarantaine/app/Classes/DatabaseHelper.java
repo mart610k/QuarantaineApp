@@ -45,6 +45,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     public String getLoggedInUser(){
+
         String username = null;
         int result = 0;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -54,9 +55,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         while(cursor.moveToNext()) {
             username = cursor.getString(0);
         }
-
-
         return username;
+    }
+
+    public boolean deleteUser() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int delete = db.delete(ACCESSTOKEN_TABLE, null, null);
+        if(delete > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     // Called everytime the database version updates
@@ -94,6 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     public boolean insertOrUpdateAccessToken(String username, OauthTokenResponseDTO tokenResponseDTO){
+        deleteUser();
         if(doesEntryExist(username)){
             return updateData(username,tokenResponseDTO);
         }
@@ -103,6 +114,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     public boolean insertData (String username, OauthTokenResponseDTO tokenResponseDTO) {
+        deleteUser();
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -126,31 +138,38 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     }
 
     public boolean updateData(String username, OauthTokenResponseDTO tokenResponseDTO) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        deleteUser();
+        try {
 
-        ContentValues values = new ContentValues();
-        values.put(ACCESS_TOKEN, tokenResponseDTO.getAccess_token());
-        values.put(REFRESH_TOKEN, tokenResponseDTO.getRefresh_token());
+            SQLiteDatabase db = this.getWritableDatabase();
 
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND,tokenResponseDTO.getValidity());
-        Date time = cal.getTime();
+            ContentValues values = new ContentValues();
+            values.put(ACCESS_TOKEN, tokenResponseDTO.getAccess_token());
+            values.put(REFRESH_TOKEN, tokenResponseDTO.getRefresh_token());
 
-
-
-        values.put(VALIDITY, time.toString());
-        values.put(TOKEN_TYPE, tokenResponseDTO.getToken_type());
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.SECOND,tokenResponseDTO.getValidity());
+            Date time = cal.getTime();
 
 
-        String[] usernamevalue = new String[]{username};
 
-        long insert = db.update(ACCESSTOKEN_TABLE, values,  USERNAME + " = ?", usernamevalue );
+            values.put(VALIDITY, time.toString());
+            values.put(TOKEN_TYPE, tokenResponseDTO.getToken_type());
 
-        if(insert == -1){
-            return false;
-        } else {
-            return true;
+
+            String[] usernamevalue = new String[]{username};
+
+            long insert = db.update(ACCESSTOKEN_TABLE, values,  USERNAME + " = ?", usernamevalue );
+
+            if(insert == -1){
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            return  false;
         }
+
     }
 
     private boolean doesEntryExist(String username){

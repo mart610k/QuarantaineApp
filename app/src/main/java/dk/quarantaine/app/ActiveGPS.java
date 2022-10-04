@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import dk.quarantaine.app.Classes.DatabaseHelper;
 import dk.quarantaine.app.Classes.LocationModel;
 
@@ -36,7 +37,7 @@ public class ActiveGPS extends AppCompatActivity {
     private final DatabaseHelper databaseHelper = new DatabaseHelper(ActiveGPS.this);
     private int datacounter = 0;
 
-    @SuppressLint("MissingPermission")
+    @SuppressLint({"MissingPermission", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

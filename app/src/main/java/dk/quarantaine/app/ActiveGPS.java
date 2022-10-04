@@ -70,6 +70,7 @@ public class ActiveGPS extends AppCompatActivity {
                 // Shows current count of data
                 Toast.makeText(ActiveGPS.this, "Current amount of Data: " +datacounter+ ". Will delete data at 6 inputs", Toast.LENGTH_SHORT).show();
 
+                // If data has been inserted a 6th time, delete data
                 if(datacounter > 5) {
                     deleteData();
                     datacounter = 0;
@@ -83,6 +84,9 @@ public class ActiveGPS extends AppCompatActivity {
 
     }
 
+    /**
+     * Method that deletes Location Data
+     */
     public void deleteData(){
         boolean result = databaseHelper.deleteLocation();
         if(result)

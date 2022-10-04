@@ -126,14 +126,6 @@ public class RegisterActivity extends AppCompatActivity {
             boolean reply = UserLogic.registerUser(username, pass, name, phone);
 
             if(reply){
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Sender til Forside");
-                builder.setTitle("Redirect");
-                AlertDialog alert = builder.create();
-
-                alert.show();
-
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                 startActivity(intent);
             }

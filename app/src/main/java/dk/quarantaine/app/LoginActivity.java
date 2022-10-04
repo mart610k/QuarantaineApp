@@ -45,7 +45,14 @@ public class LoginActivity extends AppCompatActivity {
         ));
     }
 
-
+    /**
+     * Calls our API on that makes our token
+     * waits for a reply of the api call
+     * creates the token based on returned Json object
+     * inserts user to local App database
+     * @param username
+     * @param password
+     */
     public void LoginUser(String username, String password){
 
         boolean loggedIn = false;

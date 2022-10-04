@@ -1,8 +1,8 @@
-package dk.quarantaine.app.Classes;
+package dk.quarantaine.app.classes;
 
 import android.util.Log;
 
-import dk.quarantaine.app.DTO.APIResponse;
+import dk.quarantaine.app.datamodel.APIResponse;
 import dk.quarantaine.app.service.JSONApiCaller;
 import dk.quarantaine.app.service.StringAPICaller;
 import com.fasterxml.jackson.databind.ObjectMapper;

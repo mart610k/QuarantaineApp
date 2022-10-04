@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import dk.quarantaine.app.Classes.*;
+import dk.quarantaine.app.classes.*;
 import dk.quarantaine.commons.helpers.FormatHelper;
 
 public class RegisterActivity extends AppCompatActivity {

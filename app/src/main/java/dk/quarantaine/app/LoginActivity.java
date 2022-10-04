@@ -8,8 +8,8 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
-import dk.quarantaine.app.Classes.DatabaseHelper;
-import dk.quarantaine.app.DTO.APIResponse;
+import dk.quarantaine.app.classes.DatabaseHelper;
+import dk.quarantaine.app.datamodel.APIResponse;
 import dk.quarantaine.app.service.StringAPICaller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

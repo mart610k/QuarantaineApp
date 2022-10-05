@@ -135,11 +135,11 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
             else {
-                Toast("Registrering fejlet");
+                toast("Registrering fejlet");
             }
         }
         else {
-            Toast("Udfyld venligst tomme felter");
+            toast("Udfyld venligst tomme felter");
         }
     }
 

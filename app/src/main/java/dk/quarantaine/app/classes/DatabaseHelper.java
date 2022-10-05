@@ -1,5 +1,6 @@
 package dk.quarantaine.app.classes;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,7 +14,6 @@ import dk.quarantaine.app.datamodel.LocationModel;
 
 import java.util.Calendar;
 import java.util.Date;
-
 
 public class DatabaseHelper extends SQLiteOpenHelper{
 
@@ -112,7 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      * Delete the location data from the local database
      * @return if data was saved
      */
-    public boolean deleteLocation() {
+    public boolean deleteLocations() {
         SQLiteDatabase db = this.getWritableDatabase();
         int delete = db.delete(LOCATION_TABLE, null, null);
         if(delete > 0) {

@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         String passwordValue = password.getText().toString();
         Button loginButton = (Button) findViewById(R.id.loginbutton);
 
-        loginButton.setOnClickListener(v -> LoginUser(
+        loginButton.setOnClickListener(v -> loginUser(
                 username.getText().toString(),
                 password.getText().toString()
         ));
@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (loggedIn){
 
-            Intent changePage = new Intent(LoginActivity.this,ActiveGPS.class);
+            Intent changePage = new Intent(LoginActivity.this,ActiveGPSActivity.class);
             startActivity(changePage);
             this.finish();
         }

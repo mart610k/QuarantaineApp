@@ -2,7 +2,6 @@ package dk.quarantaine.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -108,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Button registerButton = (Button) findViewById(R.id.registrer);
 
-        registerButton.setOnClickListener(v -> register(
+        registerButton.setOnClickListener(v -> registerUser(
                 username.getText().toString(),
                 password.getText().toString(),
                 name.getText().toString(),
@@ -118,12 +117,18 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-    // Start på registering af bruger, med nødvendige input
-    public void register(String username, String pass, String name, String phone){
-        if(!name.equals("") || !username.equals("") || !pass.equals("") || !phone.equals("")) {
+    /**
+     * Registers the user by calling user logic
+     * @param username the name that the user will log in with
+     * @param password the password the user will log in with
+     * @param name the display name
+     * @param phone the user's phone number
+     */
+    public void registerUser(String username, String password, String name, String phone){
+        if(!name.equals("") || !username.equals("") || !password.equals("") || !phone.equals("")) {
             // Sender data videre til næste lag
 
-            boolean reply = UserLogic.registerUser(username, pass, name, phone);
+            boolean reply = UserLogic.registerUser(username, password, name, phone);
 
             if(reply){
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
@@ -138,7 +143,12 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    // Skifter farve på tekstfelt baseret på om input er korrekt eller ukorrekt
+    /**
+     * Changes the color on a text element based on a boolean
+     * @param value controls if the color should be red or green
+     * @param input the field to change color on.
+     * @param type field type specific actions
+     */
     private void changeColour(boolean value, EditText input, String type){
 
         if(!value){
@@ -154,8 +164,11 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    // Printer en toast baseret på String input
-    private void Toast(String text) {
+    /**
+     * Helper method to show a Toast on the screen with text
+     * @param text the text to present
+     */
+    private void toast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }

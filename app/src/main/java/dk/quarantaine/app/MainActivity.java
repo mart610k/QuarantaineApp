@@ -9,16 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import dk.quarantaine.app.datamodel.APIResponse;
-import dk.quarantaine.app.service.JSONApiCaller;
-import dk.quarantaine.app.service.StringAPICaller;
-import android.widget.Button;
-
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.TimeUnit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -50,20 +42,26 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
-    // Gets the needed permissions of the app
+    /**
+     * Gets the permissions requirements and requests for them
+     */
     public void getPermissions() {
-        permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
+        permissions.add(ACCESS_FINE_LOCATION);
 
-        permissionToRequest = findUnaskedPermission(permissions);
+        permissionToRequest = requestMissingPermissions(permissions);
 
         if (permissionToRequest.size() > 0) {
             requestPermissions((String[]) permissionToRequest.toArray(new String[permissionToRequest.size()]), ALL_PERMISSIONS_RESULT);
         }
     }
 
-    // Finds out which of these permissions are unasked
-    private ArrayList findUnaskedPermission(ArrayList<String> permissions) {
+    /**
+     * Requests the user to approve the missing and required permessions
+     * @param permissions permissions to request
+     * @return list over approved permissions
+     */
+    private ArrayList requestMissingPermissions(ArrayList<String> permissions) {
         ArrayList result = new ArrayList();
 
         for (String permission : permissions) {
@@ -76,7 +74,11 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
-    // Checks if the permission is granted and returns true or false
+    /**
+     * Checks if the App have the permission
+     * @param permission the permission to check
+     * @return whether or not the app have the permission
+     */
     private Boolean hasPermission(String permission){
         return (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);
     }
@@ -127,6 +129,7 @@ public class MainActivity extends AppCompatActivity  {
         Intent changePage = new Intent(MainActivity.this,RegisterActivity.class);
         startActivity(changePage);
     }
+    
     // Changes to the login page
     public void sendToLoginPage(View view) {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -135,7 +138,8 @@ public class MainActivity extends AppCompatActivity  {
 
     // Changes to the register page
     public void sendToActiveGPS(){
-        Intent changePage = new Intent(MainActivity.this,ActiveGPS.class);
+        Intent changePage = new Intent(MainActivity.this,ActiveGPSActivity.class);
         startActivity(changePage);
+        this.finish();
     }
 }

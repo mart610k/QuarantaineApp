@@ -15,10 +15,9 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class BaseApiCaller {
+public interface BaseAPICaller {
 
-
-    public APIResponse getAPIData(String baseURL,String methodType ,String apiEndpoint, Map<String,String> header, String body){
+    default APIResponse getAPIData(String baseURL,String methodType ,String apiEndpoint, Map<String,String> header, String body){
         APIResponse response = null;
         HttpsURLConnection connection = null;
         try{

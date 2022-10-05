@@ -1,21 +1,6 @@
 package dk.quarantaine.app.service;
 
-import static java.net.URLEncoder.encode;
-
-import android.util.Log;
-import android.util.Xml;
-
 import dk.quarantaine.app.datamodel.APIResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URL;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -24,11 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import javax.net.ssl.HttpsURLConnection;
-
-import dk.quarantaine.commons.interfaces.JSONConverable;
-
-public class StringAPICaller extends BaseApiCaller implements Callable<APIResponse>{
+public class StringAPICaller implements BaseAPICaller,Callable<APIResponse>{
 
     String endpoint;
     String username;

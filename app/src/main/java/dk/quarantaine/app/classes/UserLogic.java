@@ -3,17 +3,11 @@ package dk.quarantaine.app.classes;
 import android.util.Log;
 
 import dk.quarantaine.app.datamodel.APIResponse;
-import dk.quarantaine.app.service.JSONApiCaller;
-import dk.quarantaine.app.service.StringAPICaller;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.json.JSONObject;
+import dk.quarantaine.app.service.JSONAPICaller;
+import dk.quarantaine.commons.dto.RegisterUserDTO;
 
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
-
-import dk.quarantaine.commons.dto.OauthTokenResponseDTO;
-import dk.quarantaine.commons.dto.RegisterUserDTO;
 
 public class UserLogic {
 
@@ -33,7 +27,7 @@ public class UserLogic {
 
             //This needs to moved out, But how...
 
-            FutureTask<APIResponse> task = new FutureTask<APIResponse>(new JSONApiCaller("/api/register",registerUserDTO));
+            FutureTask<APIResponse> task = new FutureTask<APIResponse>(new JSONAPICaller("/api/register",registerUserDTO));
 
             APIResponse result = null;
 

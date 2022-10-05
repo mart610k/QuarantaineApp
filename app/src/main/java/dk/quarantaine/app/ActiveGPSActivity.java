@@ -83,7 +83,7 @@ public class ActiveGPSActivity extends AppCompatActivity {
      * Method that deletes Location Data
      */
     public void deleteData(){
-        boolean result = databaseHelper.deleteLocation();
+        boolean result = databaseHelper.deleteLocations();
         if(result)
             Toast.makeText(ActiveGPSActivity.this, "Data Deleted", Toast.LENGTH_SHORT).show();
     }

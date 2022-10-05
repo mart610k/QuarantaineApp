@@ -14,7 +14,6 @@ import dk.quarantaine.app.datamodel.LocationModel;
 import java.util.Calendar;
 import java.util.Date;
 
-
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     private static final String LOCATION_TABLE = "LOCATION_TABLE";
@@ -112,7 +111,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
      * Delete the location data from the local database
      * @return if data was saved
      */
-    public boolean deleteLocation() {
+    public boolean deleteLocations() {
         SQLiteDatabase db = this.getWritableDatabase();
         int delete = db.delete(LOCATION_TABLE, null, null);
         if(delete > 0) {

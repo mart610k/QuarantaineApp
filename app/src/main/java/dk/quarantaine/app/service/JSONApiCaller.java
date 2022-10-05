@@ -3,13 +3,12 @@ package dk.quarantaine.app.service;
 import android.util.Log;
 
 import dk.quarantaine.app.datamodel.APIResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import dk.quarantaine.commons.interfaces.JSONConvertable;
 
-import org.json.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
@@ -18,16 +17,14 @@ import java.util.concurrent.Callable;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import dk.quarantaine.commons.interfaces.JSONConverable;
-
-public class JSONApiCaller extends BaseApiCaller implements Callable<APIResponse> {
+public class JSONAPICaller implements BaseAPICaller,Callable<APIResponse> {
 
     String endpoint;
-    JSONConverable jsonConverable;
+    JSONConvertable jsonConvertable;
 
-    public JSONApiCaller(String endpoint, JSONConverable jsonConverable){
+    public JSONAPICaller(String endpoint, JSONConvertable jsonConvertable){
         this.endpoint = endpoint;
-        this.jsonConverable = jsonConverable;
+        this.jsonConvertable = jsonConvertable;
 
     }
 
@@ -58,7 +55,7 @@ public class JSONApiCaller extends BaseApiCaller implements Callable<APIResponse
                 BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
                 Log.i("JSON", "Converted JSON OBJECT");
 
-                wr.write(jsonConverable.toJson().toString());
+                wr.write(jsonConvertable.toJson().toString());
                 wr.flush();
                 wr.close();
 

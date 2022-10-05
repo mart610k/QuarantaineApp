@@ -2,7 +2,6 @@ package dk.quarantaine.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -169,7 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
      * Helper method to show a Toast on the screen with text
      * @param text the text to present
      */
-    private void Toast(String text) {
+    private void toast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }

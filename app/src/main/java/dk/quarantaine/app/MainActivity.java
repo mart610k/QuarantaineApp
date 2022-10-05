@@ -9,16 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import dk.quarantaine.app.datamodel.APIResponse;
-import dk.quarantaine.app.service.JSONApiCaller;
-import dk.quarantaine.app.service.StringAPICaller;
-import android.widget.Button;
-
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.TimeUnit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -146,7 +138,7 @@ public class MainActivity extends AppCompatActivity  {
 
     // Changes to the register page
     public void sendToActiveGPS(){
-        Intent changePage = new Intent(MainActivity.this,ActiveGPS.class);
+        Intent changePage = new Intent(MainActivity.this,ActiveGPSActivity.class);
         startActivity(changePage);
         this.finish();
     }

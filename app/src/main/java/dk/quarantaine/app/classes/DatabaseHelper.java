@@ -1,17 +1,15 @@
 package dk.quarantaine.app.classes;
 
-import dk.quarantaine.commons.dto.OauthTokenResponseDTO;
-import dk.quarantaine.app.datamodel.LocationModel;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-
 import androidx.annotation.Nullable;
+
+import dk.quarantaine.commons.dto.OauthTokenResponseDTO;
+import dk.quarantaine.app.datamodel.LocationModel;
 
 import java.util.Calendar;
 import java.util.Date;

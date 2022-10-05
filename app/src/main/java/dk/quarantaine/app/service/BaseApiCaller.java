@@ -16,7 +16,15 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 
 public interface BaseAPICaller {
-
+    /**
+     * Get's the API Data in the form of an API Response
+     * @param baseURL The url to the API
+     * @param methodType Defines whether it is a POST, GET and such
+     * @param apiEndpoint The url to the wanted method, such as /api/register
+     * @param header Defines the extra headers for the request
+     * @param body The content of the data recieved or sent
+     * @return
+     */
     default APIResponse getAPIData(String baseURL,String methodType ,String apiEndpoint, Map<String,String> header, String body){
         APIResponse response = null;
         HttpsURLConnection connection = null;

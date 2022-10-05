@@ -23,11 +23,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String LOCATION_COLUMN_ID = "ID";
 
     private static final String ACCESSTOKEN_TABLE = "ACCESSTOKEN";
-    private static final String ACCESSTOKEN_COLUMN_ACCESS_TOKEN = "access_token";
-    private static final String ACCESSTOKEN_COLUMN_REFRESH_TOKEN = "refresh_token";
-    private static final String ACCESSTOKEN_COLUMN_VALIDITY = "validity";
-    private static final String ACCESSTOKEN_COLUMN_TOKEN_TYPE = "token_type";
-    private static final String ACCESSTOKEN_COLUMN_USERNAME = "username";
+    private static final String ACCESSTOKEN_COLUMN_ACCESS_TOKEN = "ACCESS_TOKEN";
+    private static final String ACCESSTOKEN_COLUMN_REFRESH_TOKEN = "REFRESH_TOKEN";
+    private static final String ACCESSTOKEN_COLUMN_VALIDITY = "VALIDITY";
+    private static final String ACCESSTOKEN_COLUMN_TOKEN_TYPE = "TOKEN_TYPE";
+    private static final String ACCESSTOKEN_COLUMN_USERNAME = "USERNAME";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, "quarantaine.db", null, 1);

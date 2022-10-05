@@ -12,6 +12,15 @@ import java.util.concurrent.TimeUnit;
 public class UserLogic {
 
     // Laver Registrer bruger objektet og sender videre til Service
+
+    /**
+     * Sender Bruger data basseret på inputs, til API således at brugeren kan blive registreret
+     * @param username Brugerens valg af brugernavn
+     * @param password Brugerens valgte kode
+     * @param name Brugerens navn
+     * @param phoneNumber Brugerens telefon nummer
+     * @return True eller False, baseret på hvorledes brugeren er blevet registreret
+     */
     public static boolean registerUser(String username, String password, String name, String phoneNumber) {
         boolean reply = false;
 

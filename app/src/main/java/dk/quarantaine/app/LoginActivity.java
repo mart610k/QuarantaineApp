@@ -19,6 +19,7 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 
 import dk.quarantaine.commons.dto.OauthTokenResponseDTO;
+import lombok.extern.jackson.Jacksonized;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -52,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
      * @param username Username that authenicate
      * @param password the password to authenticate with
      */
-    public void LoginUser(String username, String password){
+    public void loginUser(String username, String password){
 
         boolean loggedIn = false;
 
@@ -81,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (loggedIn){
 
-            Intent changePage = new Intent(LoginActivity.this,ActiveGPSActivity.class);
+            Intent changePage = new Intent(LoginActivity.this,ActiveGPS.class);
             startActivity(changePage);
             this.finish();
         }
